@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+</head>
+<body>
+<h3>登录</h3>
+<fort  th:text="${msg}" style="color:red;"></fort>
+<form method="post" action="/login/login">
+     用户名:<input type="text" name="userName"><br>
+    密码:<input type="password" name="password"><br>
+         <input type="submit" value="登录">
+        <input onClick="toReister()"  type="button" value="注册">
+</form>
+<script>
+    function toReister(){
+           location.href = "/login/toRegister";
+
+    }
+</script>
+</body>
+</html>

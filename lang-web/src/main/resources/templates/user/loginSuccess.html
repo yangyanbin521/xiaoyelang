@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+  恭喜登陆成功!!!!
+  用户的添加:<a href="/showUser">添加用户</a>
+  用户的修改:<a href="/update">修改用户</a>
+  用户的修改:<a href="/excel/download">导入模板下载</a>
+  用户的修改:<a href="/excel/exportExcel">导出</a>
+  用户的修改:<a href="/excel/download">模板下载</a>
+
+
+  <form id="uploadForm" enctype="multipart/form-data">
+
+      <input id="file" type="file" name="file"/>
+
+      <button id="upload" onclick="import01()" type="button">导入</button>
+
+  </form>
+
+<script  type="text/javascript">
+    function import01(){
+        $.ajax({
+            url: '/excel/importExcel',
+
+            type: 'POST',
+
+            cache: false, //cache设置为false，上传文件不需要缓存。
+
+            data: new FormData($('#uploadForm')[0]),
+
+            processData: false, //processData设置为false。因为data值是FormData对 象，不需要对数据做处理
+
+            contentType: false,//contentType设置为false。因为是由<form>表单构造的FormData对象，且已经声明了属性enctype="multipart/form-data"，所以这里设置为false。
+
+        success:function(res){
+
+        },
+
+        error:function(res){
+
+        }
+
+    });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoyelang.mapper.AuthMapper">
+
+    <resultMap type="com.xiaoyelang.model.Auth" id="SysAuthResult">
+        <id     property="id"       column="id"        />
+        <result property="authName"     column="auth_name"      />
+    </resultMap>
+     <!--selectRolesByUserId-->
+     <select id="selectAuthsByUserId" resultMap="SysAuthResult">
+        SELECT
+            distinct a.auth_name
+        FROM
+          auth a
+        LEFT JOIN role_auth ra ON a.id = ra.auth_id
+        LEFT JOIN user_role ur ON ra.role_id = ur.role_id
+        WHERE ur.user_id = #{userid}
+     </select>
+
+</mapper> 

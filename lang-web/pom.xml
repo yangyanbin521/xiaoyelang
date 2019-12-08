@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--1.继承父工程-->
+    <parent>
+        <groupId>com.xiaoyelang</groupId>
+        <artifactId>xiaoyelang</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>lang-web</artifactId>
+    <name>lang-web</name>
+
+    <!--2.打包成jar包-->
+    <packaging>jar</packaging>
+    <description>web接口工程</description>
+
+    <dependencies>
+
+        <!-- 核心模块-->
+        <dependency>
+            <groupId>com.xiaoyelang</groupId>
+            <artifactId>lang-framework</artifactId>
+            <version>${lang.version}</version>
+        </dependency>
+
+        <!-- 核心模块-->
+        <dependency>
+            <groupId>com.xiaoyelang</groupId>
+            <artifactId>lang-server</artifactId>
+            <version>${lang.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <finalName>${artifactId}</finalName>
+    </build>
+
+</project>

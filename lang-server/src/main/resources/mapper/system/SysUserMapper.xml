@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoyelang.mapper.UserMapper">
+
+    <!-- 用户与角色一对多 -->
+    <!--用户-->
+    <resultMap type="com.xiaoyelang.model.User" id="userModel">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+        <result property="password"    column="password"    />
+        <result property="salt"    column="salt"    />
+    </resultMap>
+    <!--用户与角色一对多-->
+    <resultMap id="userRoleList" type="com.xiaoyelang.vo.UserRoleVo" extends="userModel">
+        <collection property="roles" ofType="com.xiaoyelang.model.Role">
+            <result property="id"    column="id"    />
+            <result property="roleName"    column="role_name"    />
+        </collection>
+    </resultMap>
+
+     <!--findUser-->
+     <select id="findUser" resultType="com.xiaoyelang.model.User">
+         select * from user
+     </select>
+
+    <!--findUserByLoginName 根据用户名查询用户信息-->
+    <select id="findUserByLoginName" resultType="com.xiaoyelang.model.User">
+        select * from user where username = #{username}
+    </select>
+
+    <!--register 注册-->
+    <insert id="register">
+         INSERT INTO user (username,password,salt)
+        VALUES ( #{username}, #{password},#{salt});
+    </insert>
+
+    <!--testTransactionB 新增用户  小明-->
+    <insert id="testTransactionb">
+         INSERT INTO user (username,password)
+        VALUES(#{username},'123456');
+    </insert>
+
+    <!--testTransactionB 新增角色  天使-->
+    <insert id="testTransactionc">
+         INSERT INTO role (role_name)
+        VALUE (#{role});
+    </insert>
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="users.id" >
+        INSERT INTO user (username,password,salt)
+        VALUES ( #{users.username}, #{users.password},#{users.salt})
+    </insert>
+
+    <insert id="addRole">
+        INSERT INTO role (testid,role_name)
+        values
+        <foreach collection="nomrs" separator="," item="nomr">
+            (#{id},#{nomr})
+        </foreach>
+    </insert>
+
+    <select id="exportExcel" resultMap="userRoleList">
+       SELECT
+            u.username,
+            u.password,
+            u.salt,
+          r.role_name
+        FROM
+            `user` u
+        LEFT JOIN role r ON u.id=r.testid
+    </select>
+
+<!--    addNormDataHead-->
+    <insert id="addNormDataHead" useGeneratedKeys="true"   keyProperty="normDataHaed.id" >
+       INSERT INTO cetc_norm_data_head (
+        TYEAR,
+        TMONTH,
+        MODEL,
+        PRODUCT_FIELD,
+        REMARK
+    )
+    VALUES
+        (
+		#{normDataHaed.tyear}, #{normDataHaed.tmonth},#{normDataHaed.model},#{normDataHaed.productField},#{normDataHaed.remark})
+    </insert>
+<!--    &lt;!&ndash;批量新增  批量返回id&ndash;&gt;
+    <insert id="addNormDataHead" parameterType="java.util.List" useGeneratedKeys="true"   keyProperty="id">
+       INSERT INTO cetc_norm_data_head (
+        TYEAR,
+        TMONTH,
+        MODEL,
+        PRODUCT_FIELD,
+        REMARK
+       )
+      VALUES
+        <foreach collection="normDatalist" separator="," item="nomr">
+            (
+            #{nomr.tyear}, #{nomr.tmonth},#{nomr.model},#{nomr.productField},#{nomr.remark})
+        </foreach>
+
+    </insert>-->
+
+    <insert id="addNormData">
+        INSERT INTO cetc_norm_data (NORM_DATA_HEAD_ID,NORM_VALUE)
+        values
+        <foreach collection="nomrs" separator="," item="nomr">
+            (#{tid},#{nomr})
+        </foreach>
+    </insert>
+</mapper> 
